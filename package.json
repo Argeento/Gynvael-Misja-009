@@ -1,0 +1,32 @@
+{
+  "name": "gynvael-misja-009",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack --progress",
+    "dev": "cross-env NODE_ENV=dev webpack-dev-server --open --hot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Argeento/Gynvael-Misja-009.git"
+  },
+  "author": "Argeento",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Argeento/Gynvael-Misja-009/issues"
+  },
+  "homepage": "https://github.com/Argeento/Gynvael-Misja-009#readme",
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babili-webpack-plugin": "^0.1.2",
+    "cross-env": "^5.0.1",
+    "css-loader": "^0.28.4",
+    "file-loader": "^0.11.2",
+    "style-loader": "^0.18.2",
+    "webaudioloader": "^1.0.4",
+    "webpack": "^3.2.0",
+    "webpack-dev-server": "^2.5.1"
+  }
+}
