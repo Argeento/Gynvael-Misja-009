@@ -1,6 +1,7 @@
 import './style.css'
 import WebAudioLoader from 'webaudioloader'
 import wavFile from './e7c48e6e7a0e12dc4a15dac76c5936dfb8314d48_recording.wav'
+import { chunk } from 'lodash'
 
 const wal = new WebAudioLoader({
 	context: new AudioContext()
@@ -20,32 +21,21 @@ wal.load(wavFile, {
 		}
 
 		// slice data to samplePacks
-		const sampleRate = buffer.sampleRate
-		const samplePacksLength = data.length / sampleRate
-		const samplePacks = []
-
-		for (let i = 0; i < samplePacksLength; i++) {
-			const startSamplePosition = i * sampleRate
-			const endSamplePosition = (i + 1) * sampleRate
-			const sampleData = data.slice(startSamplePosition, endSamplePosition)
-			samplePacks.push(sampleData)
-		}
+		const samplePacks = chunk(data, buffer.sampleRate)
 
 		// create bits
 		const bits = samplePacks.map(samplePack => {
-			const lessThan02 = samplePack.filter(sample => sample < 0.2)
-			const bit = lessThan02.length === 28126 ? 0 : 1
-			return bit
+			const lessThan02 = number => number < 0.2
+			return samplePack.filter(lessThan02).length === 28126 ? 0 : 1
 		})
 
 		// create bytes
-		const bytes = bits.join('').match(/.{8}/g).map(byte => {
-			// reverse bytes order
-			return [...byte].reverse().join('')
-		})
+		const reverseBytes = byte => byte.reverse()
+		const bytes = chunk(bits, 8).map(reverseBytes)
 
 		// create ints
-		const ints = bytes.map(byte => window.parseInt(byte, 2))
+		const parsByteToInt = byte => parseInt(byte.join(''), 2)
+		const ints = bytes.map(parseArrayToInt)
 
 		// decode messsage
 		const message = String.fromCharCode(...ints)

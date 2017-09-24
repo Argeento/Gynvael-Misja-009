@@ -24,6 +24,7 @@
     "cross-env": "^5.0.1",
     "css-loader": "^0.28.4",
     "file-loader": "^0.11.2",
+    "lodash": "^4.17.4",
     "style-loader": "^0.18.2",
     "webaudioloader": "^1.0.4",
     "webpack": "^3.2.0",
